@@ -4,8 +4,7 @@
 # @file: base_page.py
 # @time: 2023/3/16 22:55
 
-import os
-import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -26,6 +25,9 @@ class BasePage:
 
     def refresh(self):
         self.driver.refresh()
+
+    def wait(self, wait_time=5):
+        self.driver.implicitly_wait(wait_time)
 
     def get_tittle(self):
         value = self.driver.title
