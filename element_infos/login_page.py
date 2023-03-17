@@ -9,7 +9,8 @@ import time
 from selenium import webdriver
 from common.base_page import BasePage
 from common.element_data_utils import ElementdataUtils
-from common.config_utils import config
+from common.config_utils import local_config
+from common.browser import Browser
 
 class LoginPage(BasePage):
     def __init__(self, driver):
@@ -34,10 +35,10 @@ class LoginPage(BasePage):
 
 
 if __name__ == '__main__':
-    driver = webdriver.Chrome(executable_path=config.get_chromedriver_path)
+    driver = Browser().get_driver()
     login_page = LoginPage(driver)
     login_page.set_browser_max()
-    login_page.wait()
+    login_page.time()
     login_page.open_url('http://47.107.178.45/zentao/www/index.php?m=user&f=login')
     login_page.input_username('test01')
     login_page.input_password('newdream123')

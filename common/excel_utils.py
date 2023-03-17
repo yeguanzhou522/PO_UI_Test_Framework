@@ -6,10 +6,10 @@
 
 import os
 import xlrd
-from common.config_utils import config
+from common.config_utils import local_config
 
 class ExcelUtils(object):
-    def __init__(self, excel_path=config.get_excel_path, sheet_name=None):
+    def __init__(self, excel_path=local_config.get_excel_path, sheet_name=None):
         self.excel_path = excel_path
         self.sheet_name = sheet_name
         self.sheet_data = self.__get_sheet_data()

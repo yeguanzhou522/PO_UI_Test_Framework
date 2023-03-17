@@ -11,9 +11,8 @@ current = os.path.dirname(__file__)
 conf_filepath = os.path.join(current, '../conf/config.ini')
 class ConfigUtils:
     def __init__(self, config_path=conf_filepath):
-        self.__conf_path = config_path
         self.__conf = configparser.ConfigParser()
-        self.__conf.read(self.__conf_path, encoding='utf-8')
+        self.__conf.read(config_path, encoding='utf-8')
 
     def __get_config(self, section, option):
         return self.__conf.get(section, option)
@@ -25,15 +24,25 @@ class ConfigUtils:
         return url_path
 
     @property
-    def get_chromedriver_path(self):
-        chromedriver_path = self.__get_config('default', 'chrome_driver_path')
-        return chromedriver_path
+    def get_driver_path(self):
+        driver_path = self.__get_config('default', 'driver_path')
+        return driver_path
 
     @property
     def get_excel_path(self):
         excel_path = self.__get_config('default', 'excel_path')
         return excel_path
 
-config = ConfigUtils()
+    @property
+    def get_driver_name(self):
+        driver_name = self.__get_config('default', 'driver_name')
+        return driver_name
+
+    @property
+    def get_time_out(self):
+        time_out = float(self.__get_config('default', 'time_out'))
+        return time_out
+
+local_config = ConfigUtils()
 if __name__ == '__main__':
-    print(config.get_excel_path)
+    print(local_config.get_excel_path)

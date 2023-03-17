@@ -3,17 +3,18 @@
 # @author: yeguanzhou
 # @file: base_page.py
 # @time: 2023/3/16 22:55
-
-
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from common.config_utils import local_config
 
 class BasePage:
     def __init__(self, driver):
-        self.driver = driver
+        self.driver = webdriver.Chrome
 
+    # 浏览器基本操作
     def open_url(self, url):
         self.driver.get(url)
 
@@ -26,7 +27,10 @@ class BasePage:
     def refresh(self):
         self.driver.refresh()
 
-    def wait(self, wait_time=5):
+    def wait(self, wait_time=local_config.get_time_out):
+        time.sleep(wait_time)
+
+    def implicitly(self, wait_time=local_config.get_time_out):
         self.driver.implicitly_wait(wait_time)
 
     def get_tittle(self):
@@ -50,6 +54,11 @@ class BasePage:
         # element = WebDriverWait(self.driver, locator_timeout).until(EC.visibility_of_element_located(locator_type, locator_value_info))
         return element
 
+    def switch_to_frame(self, element_info):
+        self.wait(2)
+        element = self.find_element(element_info)
+        self.driver.switch_to.frame(element)
+
     def click(self, element_info):
         element = self.find_element(element_info)
         element.click()
@@ -57,3 +66,14 @@ class BasePage:
     def input(self, element_info, content):
         element = self.find_element(element_info)
         element.send_keys(content)
+
+    # selenium执行js脚本
+    def excute_script(self, js_str, element_info=None):
+        if element_info:
+            self.driver.execute_script(js_str)
+        else:
+            self.driver.execute_script(js_str, element_info)
+
+
+if __name__ == '__main__':
+    pass
