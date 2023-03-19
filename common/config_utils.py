@@ -9,6 +9,8 @@ import configparser
 
 current = os.path.dirname(__file__)
 conf_filepath = os.path.join(current, '../conf/config.ini')
+
+
 class ConfigUtils:
     def __init__(self, config_path=conf_filepath):
         self.__conf = configparser.ConfigParser()
@@ -16,7 +18,6 @@ class ConfigUtils:
 
     def __get_config(self, section, option):
         return self.__conf.get(section, option)
-
 
     @property
     def get_url_path(self):
@@ -42,6 +43,12 @@ class ConfigUtils:
     def get_time_out(self):
         time_out = float(self.__get_config('default', 'time_out'))
         return time_out
+
+    @property
+    def get_screentshot_path(self):
+        screentshot = self.__get_config('default', 'screentshot_path')
+        return screentshot
+
 
 local_config = ConfigUtils()
 if __name__ == '__main__':

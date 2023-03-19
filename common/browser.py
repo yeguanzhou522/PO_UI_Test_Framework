@@ -9,8 +9,10 @@ from selenium.webdriver.chrome.options import Options
 from common.config_utils import local_config
 
 current = os.path.dirname(__file__)
+
+
 class Browser:
-    def __init__(self, driver_path=os.path.join(current, local_config.get_driver_path),
+    def __init__(self, driver_path=os.path.join(current, '..', local_config.get_driver_path),
                  driver_name=local_config.get_driver_name):
         self.__driver_path = driver_path
         self.__driver_name = driver_name
@@ -36,6 +38,7 @@ class Browser:
 
     def __get_remote_driver(self):
         pass
+
 
 if __name__ == '__main__':
     Browser().get_driver()
