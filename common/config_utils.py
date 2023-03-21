@@ -40,6 +40,16 @@ class ConfigUtils:
         return driver_name
 
     @property
+    def get_default_username(self):
+        default_username = self.__get_config('default', 'default_username')
+        return default_username
+
+    @property
+    def get_default_password(self):
+        default_password = self.__get_config('default', 'default_password')
+        return default_password
+
+    @property
     def get_time_out(self):
         time_out = float(self.__get_config('default', 'time_out'))
         return time_out

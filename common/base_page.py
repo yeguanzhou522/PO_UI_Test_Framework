@@ -30,6 +30,12 @@ class BasePage:
     def refresh(self):
         self.driver.refresh()
 
+    def close_table(self):
+        self.driver.close()
+
+    def exit_driver(self):
+        self.driver.quit()
+
     def wait(self, wait_time=local_config.get_time_out):
         time.sleep(wait_time)
 
@@ -55,6 +61,8 @@ class BasePage:
             locator_type = By.CSS_SELECTOR
         elif locator_type_name == 'class':
             locator_type = By.CLASS_NAME
+        elif locator_type_name == 'link_text':
+            locator_type = By.LINK_TEXT
         element = WebDriverWait(self.driver, locator_timeout).until(lambda x: x.find_element(locator_type,
                                                                                              locator_value_info))
         # element = WebDriverWait(self.driver, locator_timeout).until(EC.visibility_of_element_located(locator_type, locator_value_info))

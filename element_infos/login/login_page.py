@@ -35,6 +35,9 @@ class LoginPage(BasePage):
     def click_keeplogin(self):
         self.click(self.keeplogin_checkbox)
 
+    def login_by_cookie(self):
+        pass
+
 
 if __name__ == '__main__':
     driver = Browser().get_driver()
