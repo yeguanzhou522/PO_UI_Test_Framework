@@ -35,6 +35,11 @@ class ConfigUtils:
         return excel_path
 
     @property
+    def get_log_path(self):
+        log_path = self.__get_config('default', 'log_path')
+        return log_path
+
+    @property
     def get_driver_name(self):
         driver_name = self.__get_config('default', 'driver_name')
         return driver_name

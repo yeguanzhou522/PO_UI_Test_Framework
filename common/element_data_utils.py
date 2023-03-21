@@ -7,6 +7,7 @@
 import os
 from common.excel_utils import ExcelUtils
 from common.config_utils import local_config
+from common.log_utils import local_logger
 
 
 class ElementdataUtils:
@@ -14,6 +15,11 @@ class ElementdataUtils:
         self.__excel_utils = ExcelUtils(element_path, module_name)
 
     def get_element_info(self, page_name):
+        """
+        将excel数据转换成{{},{},{},...}格式
+        :param page_name: excel数据的页面名称，如login_page
+        :return:元素信息字典
+        """
         element_info = self.__excel_utils.get_sheet_data_by_dict()
         element_infos = {}
         for name in element_info:
@@ -21,9 +27,10 @@ class ElementdataUtils:
                 element_info[name]['timeout'] = element_info[name]['timeout'] if isinstance(
                     element_info[name]['timeout'], float) else local_config.get_time_out  # 如果time_out为空，则取默认超时时间
                 element_infos[name] = element_info[name]
+        local_logger.info('根据module：{},page_name:{} 获取元素信息：{}'.format(self.__excel_utils.sheet_name, page_name, element_info.keys()))
         return element_infos
 
 
 if __name__ == '__main__':
-    element_info_data = ElementdataUtils('login_suite').get_element_info('login_page')
+    element_info_data = ElementdataUtils('login').get_element_info('login_page')
     print(element_info_data)

@@ -7,6 +7,7 @@
 import os
 import xlrd
 from common.config_utils import local_config
+from common.log_utils import local_logger
 
 
 class ExcelUtils(object):
@@ -19,16 +20,19 @@ class ExcelUtils(object):
         try:
             workbook = xlrd.open_workbook(self.excel_path)
         except xlrd.biffh.XLRDError:
-            print('非Excel文件，请重新上传')
+            local_logger.info('非Excel文件，请重新上传')
         except FileNotFoundError:
-            print('文件不存在，请重新上传')
+            local_logger.info('文件不存在，请重新上传')
         except Exception as e:
-            print('系统异常:', e)
+            local_logger.info(f'系统异常：{e}')
+            raise e
         else:
             if self.sheet_name:  # 当sheet_name没有带参数时，默认取第一个sheet页
                 sheet = workbook.sheet_by_name(self.sheet_name)
+                local_logger.info('根据sheet页名称：{}获取数据'.format(self.sheet_name))
             else:
                 sheet = workbook.sheet_by_index(0)
+                local_logger.info('无sheet页名称，默认取第一个sheet的数据')
             return sheet
 
     @property
@@ -42,6 +46,7 @@ class ExcelUtils(object):
         return col_cont
 
     def get_sheet_data_by_list(self):  # 把Excel的数据转换成[[],[],...],去除第一行数据
+        local_logger.info('把Excel的数据转换成[[],[],...],去除第一行数据')
         all_excel_data = []
         for rownum in range(1, self.get_row_cont):
             row_excel_data = []
@@ -51,6 +56,7 @@ class ExcelUtils(object):
         return all_excel_data
 
     def get_sheet_data_by_dict(self):  # 把Excel的数据转换成{"var1":{}, "var2":{}, ...}
+        local_logger.info('把Excel的数据转换成{"var1":{}, "var2":{}, ...}')
         all_excel_data = {}
         for rownum in range(1, self.get_row_cont):
             row_excel_data = {}
