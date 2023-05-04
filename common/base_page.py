@@ -13,6 +13,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from common.config_utils import local_config
 from common.log_utils import local_logger
+from common import HTMLTestReportCN
 
 
 class BasePage:
@@ -170,13 +171,17 @@ class BasePage:
         ActionChains(self.driver).key_down(key).send_keys(content).key_down(key).perform()
         local_logger.info('键盘组合按键:{} + {}'.format(key, content))
 
+    def screentshot_as_file_report(self):  # 调用HTMLTestReportCN.py中的截图方法
+        report_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), local_config.get_report_path)
+        report_dir = HTMLTestReportCN.ReportDirectory(report_path)
+        report_dir.get_screenshot(self.driver)
+
     def screentshot_as_file(self, *screentshot_path):
+        now = time.strftime("%Y_%m_%d_%H_%M_%S")
         if len(screentshot_path) == 0:
-            screentshot_filepath = local_config.get_screentshot_path
+            screentshot_filepath = os.path.join(os.path.dirname(__file__), local_config.get_screentshot_path, f'UITtest_screentshot_{now}.png')
         else:
             screentshot_filepath = screentshot_path[0]
-        now = time.strftime("%Y_%m_%d_%H_%M_%S")
-        screentshot_filepath = os.path.join(os.path.dirname(__file__), screentshot_filepath, f'UITtest_screentshot_{now}.png')
         local_logger.info('截图路径:{}'.format(screentshot_filepath))
         return self.driver.save_screenshot(screentshot_filepath)
 

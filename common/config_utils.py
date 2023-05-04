@@ -40,6 +40,21 @@ class ConfigUtils:
         return log_path
 
     @property
+    def get_report_path(self):
+        report_path = self.__get_config('default', 'report_path')
+        return report_path
+
+    @property
+    def get_testcase_path(self):
+        testcase_path = self.__get_config('default', 'testcase_path')
+        return testcase_path
+
+    @property
+    def get_case_path(self):
+        case_path = self.__get_config('default', 'case_path')
+        return case_path
+
+    @property
     def get_driver_name(self):
         driver_name = self.__get_config('default', 'driver_name')
         return driver_name
